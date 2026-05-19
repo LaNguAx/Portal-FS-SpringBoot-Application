@@ -2,8 +2,11 @@ package com.eazybytes.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.webmvc.autoconfigure.error.ErrorMvcAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
+//@SpringBootApplication(exclude = {ErrorMvcAutoConfiguration.class})
+@SpringBootApplication()
 public class BackendApplication {
 
 	public static void main(String[] args) {
@@ -11,3 +14,4 @@ public class BackendApplication {
 	}
 
 }
+
