@@ -22,8 +22,8 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void configureApiVersioning(ApiVersionConfigurer configurer) {
-        WebMvcConfigurer.super.configureApiVersioning(configurer);
-        configurer.useMediaTypeParameter(MediaType.parseMediaType("application/vnd.eazyapp+json"), "v").addSupportedVersions("1.0", "2.0", "3.0").setDefaultVersion(("1.0"));
+        configurer.useMediaTypeParameter(MediaType.parseMediaType("application/vnd.eazyapp+json"), "v")
+                .addSupportedVersions("1.0","2.0","3.0").setDefaultVersion("1.0");
     }
 
     /**
@@ -37,8 +37,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
-        WebMvcConfigurer.super.configurePathMatch(configurer);
-        configurer.addPathPrefix("/api", _ -> true);
+        configurer.addPathPrefix("/api",_ -> true);
     }
 
     /**
@@ -58,8 +57,11 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        WebMvcConfigurer.super.addCorsMappings(registry);
-        registry.addMapping(("/api/**")).allowedOrigins("http://localhost:5173").allowedMethods(
-                "*").allowedHeaders("*").exposedHeaders("*").allowCredentials(true).maxAge(3600);
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:5173")
+                .allowedMethods("*")
+                .allowedHeaders("*")
+                .exposedHeaders("*")
+                .allowCredentials(true).maxAge(3600);
     }
 }

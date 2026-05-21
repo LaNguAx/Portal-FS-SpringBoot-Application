@@ -5,4 +5,5 @@ import com.eazybytes.jobportal.dto.ContactRequestDto;
 public interface IContactService {
 
     boolean saveContact(ContactRequestDto contactRequestDto);
+
 }

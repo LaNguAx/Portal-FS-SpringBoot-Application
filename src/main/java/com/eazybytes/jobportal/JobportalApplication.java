@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing(auditorAwareRef = "auditorAwareImpl")
 public class JobportalApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(JobportalApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(JobportalApplication.class, args);
+	}
 
 }

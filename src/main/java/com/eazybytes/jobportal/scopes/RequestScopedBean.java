@@ -7,13 +7,13 @@ import org.springframework.web.context.annotation.RequestScope;
 
 @Component
 @RequestScope
-@Getter
-@Setter
+@Getter @Setter
 public class RequestScopedBean {
 
-    private String name;
+    private String username;
 
     public RequestScopedBean() {
         System.out.println("RequestScopedBean created");
     }
+
 }

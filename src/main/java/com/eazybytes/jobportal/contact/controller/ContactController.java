@@ -14,38 +14,26 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/contacts")
 @RequiredArgsConstructor
-@Validated
 public class ContactController {
 
     private final IContactService contactService;
 
     @PostMapping(version = "1.0")
     public ResponseEntity<String> saveContactMsg(@RequestBody @Valid ContactRequestDto contactRequestDto) {
-        boolean isSaved = contactService.saveContact(contactRequestDto);
+        boolean isSaved =  contactService.saveContact(contactRequestDto);
         if (isSaved) {
-            return ResponseEntity.status(HttpStatus.CREATED).body("Request processed successfully");
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Request processed successfully");
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Request " +
-                    "Processing Failed");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Request processing failed");
         }
     }
 
-    @GetMapping
-    public ResponseEntity<String> fetchOpenContacts(
-            @RequestParam
-            @NotBlank(message = "Status can not be blank")
-            @Size(min = 4, message = "Status needs to be at least 4 chars")
-            String status) {
-        return ResponseEntity.ok(status);
+    @GetMapping(version = "1.0")
+    public ResponseEntity<String> fetchOpenContacts(@RequestParam
+                                                        @Validated @NotBlank(message = "Status can not be blank")
+                                                        @Size(min = 4,message = "Status lenght should be of minimum 4 chars") String status) {
+        return ResponseEntity.ok("These are the contacts with the given status: " + status);
     }
-
-//    This runs before the global exception handler
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorResponseDto> handleException(Exception exception, WebRequest webRequest) {
-//        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
-//                webRequest.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR,
-//                "Exception from Controller class due to: " + exception.getMessage(),
-//                LocalDateTime.now());
-//        return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
 }

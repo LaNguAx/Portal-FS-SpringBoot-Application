@@ -1,6 +1,7 @@
 package com.eazybytes.jobportal.exception;
 
 import com.eazybytes.jobportal.dto.ErrorResponseDto;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -20,7 +21,6 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDto> handleException(Exception exception, WebRequest webRequest) {
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(
@@ -29,18 +29,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<ErrorResponseDto> handleNullException(Exception exception,
-                                                                WebRequest webRequest) {
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
-                webRequest.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR,
-                "A null pointer exception occurred due to: " + exception.getMessage(),
-                LocalDateTime.now());
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleException(MethodArgumentNotValidException exception) {
+    public ResponseEntity<Map<String,String>> handleException(MethodArgumentNotValidException exception) {
         Map<String, String> errors = new HashMap<>();
         List<FieldError> fieldErrorList = exception.getBindingResult().getFieldErrors();
         fieldErrorList.forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
@@ -48,7 +38,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HandlerMethodValidationException.class)
-    public ResponseEntity<Map<String, String>> handleException(HandlerMethodValidationException exception) {
+    public ResponseEntity<Map<String,String>> handleException(HandlerMethodValidationException exception) {
         Map<String, String> errors = new HashMap<>();
         List<ParameterValidationResult> results = exception.getParameterValidationResults();
         results.forEach(result -> {
@@ -62,6 +52,14 @@ public class GlobalExceptionHandler {
             errors.put(paramName, combinedMessages);
         });
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ErrorResponseDto> handleNullException(Exception exception, WebRequest webRequest) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                webRequest.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR,
+                "A NullPointerException occurred due to : "+exception.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

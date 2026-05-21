@@ -1,7 +1,7 @@
 package com.eazybytes.jobportal.company.controller;
 
-import com.eazybytes.jobportal.company.service.ICompanyService;
 import com.eazybytes.jobportal.dto.CompanyDto;
+import com.eazybytes.jobportal.company.service.ICompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,20 +13,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies")
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "http://localhost:5173")
 public class CompanyController {
 
     private final ICompanyService companyService;
 
-//    @Autowired
-//    public CompanyController(ICompanyService companyService) {
-//        this.companyService = companyService;
-//    }
-
     @GetMapping(version = "1.0")
     public ResponseEntity<List<CompanyDto>> getAllCompanies() {
-
-        List<CompanyDto> companies = companyService.getAllCompanies();
-        return ResponseEntity.ok().body(companies);
+        List<CompanyDto> companyList = companyService.getAllCompanies();
+        return ResponseEntity.ok().body(companyList);
     }
+
 }
