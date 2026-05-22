@@ -20,7 +20,7 @@ public class ContactController {
 
     @PostMapping(path = "/public", version = "1.0")
     public ResponseEntity<String> saveContactMsg(@RequestBody @Valid ContactRequestDto contactRequestDto) {
-        boolean isSaved = contactService.saveContact(contactRequestDto);
+        boolean isSaved =  contactService.saveContact(contactRequestDto);
         if (isSaved) {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body("Request processed successfully");
@@ -30,10 +30,4 @@ public class ContactController {
         }
     }
 
-    @GetMapping(version = "1.0")
-    public ResponseEntity<String> fetchOpenContacts(@RequestParam
-                                                    @Validated @NotBlank(message = "Status can not be blank")
-                                                    @Size(min = 4, message = "Status lenght should be of minimum 4 chars") String status) {
-        return ResponseEntity.ok("These are the contacts with the given status: " + status);
-    }
 }

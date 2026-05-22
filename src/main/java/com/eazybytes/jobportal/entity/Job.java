@@ -79,17 +79,20 @@ public class Job extends BaseEntity {
     private String salaryPeriod;
 
     @NotNull
-    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
+    @Lob
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "requirements", columnDefinition = "TEXT")
+    @Lob
+    @Column(name = "requirements")
     private String requirements;
 
-    @Column(name = "benefits", columnDefinition = "TEXT")
+    @Lob
+    @Column(name = "benefits")
     private String benefits;
 
     @NotNull
-    @ColumnDefault("CURRENT_TIMESTAMP(6)")
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "posted_date", nullable = false)
     private Instant postedDate;
 

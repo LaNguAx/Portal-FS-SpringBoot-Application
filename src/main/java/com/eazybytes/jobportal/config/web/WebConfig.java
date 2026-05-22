@@ -2,8 +2,11 @@ package com.eazybytes.jobportal.config.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.config.annotation.ApiVersionConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -21,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void configureApiVersioning(ApiVersionConfigurer configurer) {
         configurer.useMediaTypeParameter(MediaType.parseMediaType("application/vnd.eazyapp+json"), "v")
-                .addSupportedVersions("1.0", "2.0", "3.0").setDefaultVersion("1.0");
+                .addSupportedVersions("1.0","2.0","3.0").setDefaultVersion("1.0");
     }
 
     /**
@@ -35,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
-        configurer.addPathPrefix("/api", _ -> true);
+        configurer.addPathPrefix("/api",_ -> true);
     }
 
 }

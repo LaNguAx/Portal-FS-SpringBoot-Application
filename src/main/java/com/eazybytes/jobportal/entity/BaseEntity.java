@@ -5,7 +5,6 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -25,8 +24,7 @@ public class BaseEntity {
 
     @CreatedDate
     @CreationTimestamp
-    @ColumnDefault("CURRENT_TIMESTAMP(6)")
-    @Column(name = "CREATED_AT", nullable = false, updatable = false)
+    @Column(name = "CREATED_AT", nullable = false,updatable = false)
     private Instant createdAt;
 
     @CreatedBy
