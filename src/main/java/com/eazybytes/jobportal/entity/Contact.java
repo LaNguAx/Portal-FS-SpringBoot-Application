@@ -10,6 +10,10 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
+@NamedQueries({
+        @NamedQuery(name= "Contact.updateStatusById",
+        query = "UPDATE Contact c SET c.status = :status, c.updatedAt = CURRENT_INSTANT, c.updatedBy = :updatedBy WHERE c.id = :id")
+})
 @Table(name = "contacts")
 public class Contact extends BaseEntity {
     @Id
